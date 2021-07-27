@@ -10,9 +10,7 @@ describe('Authentication', () => {
     });
 
     it('Should authenticate with valid credentials', async() => {
-        const user = await User.create({
-            name: 'Diego',
-            email: 'diego@gmail.com',
+        const user = await factory.create('User', {
             password: '123123'
         });
 
@@ -27,9 +25,7 @@ describe('Authentication', () => {
     });
 
     it('Should not authenticate with invalid credentials', async () => {
-        const user = await User.create({
-            name: 'Diego',
-            email: 'diego@gmail.com',
+        const user = await factory.create('User', {
             password: '123123'
         });
 
@@ -44,9 +40,7 @@ describe('Authentication', () => {
     })
 
     it('should return jwt token when authenticated', async () => {
-        const user = await User.create({
-            name: 'Diego',
-            email: 'diego@gmail.com',
+        const user = await factory.create('User', {
             password: '123123'
         });
 
