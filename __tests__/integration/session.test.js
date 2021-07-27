@@ -1,7 +1,8 @@
 const request = require('supertest');
+
 const app = require('../../src/app');
-const { User } = require('../../src/app/models');
 const truncate = require('../utils/truncate');
+const factory = require('../factories');
 
 describe('Authentication', () => {
     beforeEach(async () => {
@@ -40,5 +41,22 @@ describe('Authentication', () => {
             });
 
         expect(response.status).toBe(401);
+    })
+
+    it('should return jwt token when authenticated', async () => {
+        const user = await User.create({
+            name: 'Diego',
+            email: 'diego@gmail.com',
+            password: '123123'
+        });
+
+        const response = await request(app)
+            .post('/sessions')
+            .send({
+                email: user.email,
+                password: '123123'
+            });
+
+        expect(response.body).toHaveProperty('token');
     })
 })
